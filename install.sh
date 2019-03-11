@@ -74,8 +74,6 @@ echo "port = 8086" >> pygatt_sensors.ini
 
 echo "Configuring the BLE sensor devices to be used..."
 
-exit 
-
 # prompt user to enter the device(s) hw address
 
 echo "Please enter each sensor device's information... Press q when finished adding devices."
