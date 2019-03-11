@@ -65,12 +65,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 
 # Add db credentials to config file 
-echo "[DATABASE]" > pygatt_sensors.ini
-echo "db_name = enviropi" >> pygatt_sensors.ini
-echo "username = enviropi_user" >> pygatt_sensors.ini
-echo "password = $mpass" >> pygatt_sensors.ini
-echo "host = localhost" >> pygatt_sensors.ini
-echo "port = 8086" >> pygatt_sensors.ini
+echo "[DATABASE]" > sensors_to_influxdb.ini
+echo "db_name = enviropi" >> sensors_to_influxdb.ini
+echo "username = enviropi_user" >> sensors_to_influxdb.ini
+echo "password = $mpass" >> sensors_to_influxdb.ini
+echo "host = localhost" >> sensors_to_influxdb.ini
+echo "port = 8086" >> sensors_to_influxdb.ini
 
 echo "Configuring the BLE sensor devices to be used..."
 
@@ -85,16 +85,16 @@ while true; do
                 break
         fi
         echo "Adding device $num to the configuration..."
-		echo "[DEVICE$num]" >> pygatt_sensors.ini
-		echo "address: $a" >> pygatt_sensors.ini
-		echo "sensor_id: Si7021" >> pygatt_sensors.ini
+		echo "[DEVICE$num]" >> sensors_to_influxdb.ini
+		echo "address: $a" >> sensors_to_influxdb.ini
+		echo "sensor_id: Si7021" >> sensors_to_influxdb.ini
 		# These are the standard handles for the Adafruit Feather 32u4 Bluefruit LE
-		# will need to be modified in pygatt_sensors.ini if a different device is used  
-		echo "temp_handle: 00002a6e-0000-1000-8000-00805f9b34fb" >> pygatt_sensors.ini
-		echo "humid_handle: 00002a6f-0000-1000-8000-00805f9b34fb" >> pygatt_sensors.ini
-		echo "battery_handle: 00002a19-0000-1000-8000-00805f9b34fb" >> pygatt_sensors.ini
-		echo "temp_calibrate: 0" >> pygatt_sensors.ini
-		echo "humid_calibrate: 0" >> pygatt_sensors.ini
+		# will need to be modified in sensors_to_influxdb.ini if a different device is used  
+		echo "temp_handle: 00002a6e-0000-1000-8000-00805f9b34fb" >> sensors_to_influxdb.ini
+		echo "humid_handle: 00002a6f-0000-1000-8000-00805f9b34fb" >> sensors_to_influxdb.ini
+		echo "battery_handle: 00002a19-0000-1000-8000-00805f9b34fb" >> sensors_to_influxdb.ini
+		echo "temp_calibrate: 0" >> sensors_to_influxdb.ini
+		echo "humid_calibrate: 0" >> sensors_to_influxdb.ini
         echo "Finished with device $a !"
 		num=$((num + 1))
 done
@@ -102,7 +102,7 @@ done
 echo "Creating crontab to collect data every 10 minutes..."
 
 (crontab -l 2>/dev/null; echo "SHELL=/bin/bash") | crontab -
-(crontab -l 2>/dev/null; echo '*/10 * * * * source /home/pi/enviropi/env/bin/activate && sudo "PATH=$PATH" /home/pi/enviropi/env/bin/python3 /home/pi/enviropi/pygatt_sensors.py') | crontab -
+(crontab -l 2>/dev/null; echo '*/10 * * * * source /home/pi/enviropi/env/bin/activate && sudo "PATH=$PATH" /home/pi/enviropi/env/bin/python3 /home/pi/enviropi/sensors_to_influxdb.py') | crontab -
 
 addr=`hostname -I`
 
