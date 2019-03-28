@@ -95,6 +95,8 @@ while true; do
 		echo "battery_handle: 00002a19-0000-1000-8000-00805f9b34fb" >> sensors_to_influxdb.ini
 		echo "temp_calibrate: 0" >> sensors_to_influxdb.ini
 		echo "humid_calibrate: 0" >> sensors_to_influxdb.ini
+        read -p "Enter location of Device $num : " loc
+		echo "location: $loc" >> sensors_to_influxdb.ini
         echo "Finished with device $a !"
 		num=$((num + 1))
 done
