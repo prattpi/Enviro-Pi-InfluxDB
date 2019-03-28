@@ -99,6 +99,7 @@ def main():
       # Get each device's info
       device_hwadd=attributes['address']
       sensor_id=attributes['sensor_id']
+      dev_loc=attributes['location']
       temp_calibrate=float(attributes['temp_calibrate'])
       humid_calibrate=float(attributes['humid_calibrate'])
       # See if device is available
@@ -123,7 +124,7 @@ def main():
          {
           "measurement": "environment",
               "tags": {
-                  "location": "Living Room",
+                  "location": dev_loc,
                   "device_id": device_hwadd,
                   "sensor_id": sensor_id
               },
